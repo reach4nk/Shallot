@@ -35,6 +35,7 @@
 #include "print.h"
 #include "thread.h"
 #include "defines.h"
+#define EXTERN
 #include "globals.h"
 
 #ifdef LINUX_PORT
