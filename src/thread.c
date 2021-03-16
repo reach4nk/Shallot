@@ -75,25 +75,26 @@ void *worker(void *params) { // life cycle of a cracking pthread
 
       if(regex ? (!regexec(regex, onion, 0, 0, 0))
                : (memcmp(prefix, onion, prefix_size) == 0)) { // check for a match
-        // let our main thread know on which thread to wait
-        lucky_thread = pthread_self();
-        found = 1; // kill off our other threads, asynchronously
-
-        if(monitor)
-          printf("\n"); // keep our printing pretty!
-
         if(!BN_bin2bn(e_ptr, e_bytes, rsae))   // store our e in the actual key
           error(X_BIGNUM_FAILED);              // and make sure it got there
 
-        if(!sane_key(rsa))        // check our key
-          error(X_YOURE_UNLUCKY); // bad key :(
+        if(!sane_key(rsa)) {      // check our key
+          fprintf(stderr, "\nWARNING: You happened to find a bad key - congrats. Continuing...\n");
+        } else {
+          // let our main thread know on which thread to wait
+          lucky_thread = pthread_self();
+          found = 1; // kill off our other threads, asynchronously
 
-        print_onion(onion); // print our domain
-        print_prkey(rsa);   // and more importantly the key
+          if(monitor)
+            printf("\n"); // keep our printing pretty!
 
-        RSA_free(rsa); // free up what's left
+          print_onion(onion); // print our domain
+          print_prkey(rsa);   // and more importantly the key
 
-        return 0;
+          RSA_free(rsa); // free up what's left
+
+          return 0;
+        }
       }
 
       e += 2; // do *** NOT *** forget this!
