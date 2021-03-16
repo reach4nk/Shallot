@@ -1,7 +1,3 @@
-#!/bin/sh
-
-
-
 ifeq ($(CC),)
   CC=gcc
 endif
