@@ -25,7 +25,9 @@ RSA *easygen(uint16_t num, uint8_t len, uint8_t *der, uint8_t edl,
              SHA_CTX *ctx) {
   uint8_t der_len;
   RSA *rsa = RSA_new();
-  BIGNUM *BN_three;
+  BN_CTX *bctx = BN_CTX_new();
+  BN_CTX_start(bctx);
+  BIGNUM *BN_three = BN_CTX_get(bctx);
   BN_dec2bn(&BN_three, "3");
 
   for(;;) { // ugly, I know, but better than using goto IMHO
@@ -51,6 +53,9 @@ RSA *easygen(uint16_t num, uint8_t len, uint8_t *der, uint8_t edl,
   // and prepare our hash context
   SHA1_Init(ctx);
   SHA1_Update(ctx, der, der_len - 1);
+
+  BN_CTX_end(bctx);
+  BN_CTX_free(bctx);
 
   return rsa;
 }

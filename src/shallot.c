@@ -35,6 +35,7 @@
 #include "print.h"
 #include "thread.h"
 #include "defines.h"
+#define EXTERN
 #include "globals.h"
 
 #ifdef LINUX_PORT
@@ -265,9 +266,9 @@ int main(int argc, char *argv[]) { // onions are fun, here we go
 
     // redirect output
     if (
-			(freopen(file, "w", stdout) == NULL) ||
-			(freopen(file, "w", stderr) == NULL)
-		) error(X_FILE_OPEN_ERR);
+      (freopen(file, "w", stdout) == NULL) ||
+      (freopen(file, "w", stderr) == NULL)
+    ) error(X_FILE_OPEN_ERR);
   }
 
   if(daemon && (getppid() != 1)) { // daemonize if we should

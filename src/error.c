@@ -12,7 +12,7 @@ void usage(void) {
   printf("Usage: shallot [-dmopv] [-f <file>] [-t count] [-x time] [-e limit] pattern\n"
          "  -d        : Daemonize (requires -f)\n"
          "  -m        : Monitor mode (incompatible with -f)\n"
-	 "  -o        : Optimize RSA key size to improve SHA-1 hashing speed\n"
+         "  -o        : Optimize RSA key size to improve SHA-1 hashing speed\n"
          "  -p        : Print 'pattern' help and exit\n"
          "  -f <file> : Write output to <file>\n"
          "  -t count  : Forces exactly count threads to be spawned\n"
